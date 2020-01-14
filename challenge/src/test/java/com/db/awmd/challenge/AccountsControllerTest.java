@@ -115,8 +115,9 @@ public class AccountsControllerTest {
 	  String accountFromId = "Id-1234";
 	  String accountToId = "Id-111";
 	  BigDecimal amount = new BigDecimal("1200");
-	  this.mockMvc.perform(post("/v1/accounts/" + accountFromId + "/" + accountToId + "/" + amount + "" ).contentType(MediaType.APPLICATION_JSON)
-		      .content("{\"accountFromId\":" + accountFromId + ",\"accountToId\":" + accountToId + ",\"amount\":" + amount + "}")).andExpect(status().isOk());
+	  this.mockMvc.perform(post("/v1/accounts/transfer").contentType(MediaType.APPLICATION_JSON).param("accountFromId", accountFromId)
+			  .param("accountToId", accountToId).param("amount", amount.toString()))
+		      .andExpect(status().isOk());
 	
   }
   
@@ -131,7 +132,7 @@ public class AccountsControllerTest {
 	  String accountFromId = "Id-1234";
 	  String accountToId = "Id-111";
 	  BigDecimal amount = new BigDecimal("120000");
-	  this.mockMvc.perform(post("/v1/accounts/" + accountFromId + "/" + accountToId + "/" + amount + "" ).contentType(MediaType.APPLICATION_JSON)
-		      .content("{\"accountFromId\":" + accountFromId + ",\"accountToId\":" + accountToId + ",\"amount\":" + amount + "}")).andExpect(status().isBadRequest());
+	  this.mockMvc.perform(post("/v1/accounts/transfer").contentType(MediaType.APPLICATION_JSON)
+		      .param("accountFromId",accountFromId).param("accountToId", accountToId).param("amount", amount.toString())).andExpect(status().isBadRequest());
   }
 }
